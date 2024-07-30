@@ -7,6 +7,7 @@
     Actualizado: agosto de 2021, Luis Cu
 */
 
+import java.lang.Math;
 import java.util.LinkedList;
 import java.util.Stack;
 
@@ -79,38 +80,66 @@ public class Parser {
   // Funcion que verifica la precedencia de un operador
   private int pre(Token op) {
     /* TODO: Su codigo aqui */
-
     /* El codigo de esta seccion se explicara en clase */
-
     switch (op.getId()) {
-      case Token.PLUS:
-        return 1;
+      case Token.RPAREN:
+      case Token.LPAREN:
+        return 5;
+      case Token.UNARY:
+        return 4;
+      case Token.EXP:
+        return 3;
       case Token.MULT:
+      case Token.DIV:
+      case Token.MOD:
         return 2;
+      case Token.PLUS:
+      case Token.MINUS:
+        return 1;
       default:
         return -1;
     }
   }
 
   private void popOp() {
-    Token op = this.operadores.pop();
-
     /* TODO: Su codigo aqui */
-
     /* El codigo de esta seccion se explicara en clase */
-
+    Token op = this.operadores.pop();
     if (op.equals(Token.PLUS)) {
       double a = this.operandos.pop();
       double b = this.operandos.pop();
       // print para debug, quitarlo al terminar
       System.out.println("suma " + a + " + " + b);
       this.operandos.push(a + b);
+    } else if (op.equals(Token.MINUS)) {
+      double a = this.operandos.pop();
+      double b = this.operandos.pop();
+      System.out.printf("resta %d - %d\n", a, b);
+      this.operandos.push(a - b);
     } else if (op.equals(Token.MULT)) {
       double a = this.operandos.pop();
       double b = this.operandos.pop();
-      // print para debug, quitarlo al terminar
-      System.out.println("mult " + a + " * " + b);
+      System.out.printf("mult %d * %d\n", a, b);
       this.operandos.push(a * b);
+    } else if (op.equals(Token.DIV)) {
+      double a = this.operandos.pop();
+      double b = this.operandos.pop();
+      System.out.printf("mult %d / %d\n", a, b);
+      this.operandos.push(a / b);
+    } else if (op.equals(Token.MOD)) {
+      double a = this.operandos.pop();
+      double b = this.operandos.pop();
+      System.out.printf("mod %d % %d\n", a, b);
+      this.operandos.push(a % b);
+    } else if (op.equals(Token.EXP)) {
+      double a = this.operandos.pop();
+      double b = this.operandos.pop();
+      System.out.printf("exp %d ^ %d\n", a, b);
+      this.operandos.push(Math.pow(a, b));
+    } else if (op.equals(Token.UNARY)) {
+      double a = this.operandos.pop();
+      System.out.printf("neg %d\n", a);
+      this.operandos.push(a * -1);
     }
   }
 
