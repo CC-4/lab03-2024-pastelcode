@@ -12,14 +12,14 @@ CLASSPATH=$(PWD)/lib/jlex.jar
 lexer: lexer.lex
 	java -classpath $(CLASSPATH) JLex.Main lexer.lex
 	mv lexer.lex.java Lexer.java
-	javac Lexer.java
+	javac --release 11 Lexer.java
 	$(RM) lexer
 	echo '#!/bin/sh' >> lexer
 	echo 'java Lexer $$*' >> lexer
 	chmod a+x lexer
 
 parser: Parser.java lexer
-	javac Main.java
+	javac --release 11 Main.java
 	$(RM) parser
 	echo '#!/bin/sh' >> parser
 	echo 'java Main' >> parser
