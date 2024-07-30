@@ -148,9 +148,23 @@ public class Parser {
 
   private boolean E() {
     int saved = next;
-    return (next = saved, E1())
-      || (next = saved, E2())
-      || (next = saved, E3());
+
+    next = saved;
+    if (E1()) {
+      return true;
+    }
+
+    next = saved;
+    if (E2()) {
+      return true;
+    }
+
+    next = saved;
+    if (E3()) {
+      return true;
+    }
+
+    return false;
   }
 
   private boolean N1() {
@@ -183,13 +197,43 @@ public class Parser {
 
   private boolean N() {
     int saved = next;
-    return (next = saved, N1())
-      || (next = saved, N2())
-      || (next = saved, N3())
-      || (next = saved, N4())
-      || (next = saved, N5())
-      || (next = saved, N6())
-      || (next = saved, N7());
+
+    next = saved;
+    if (N1()) {
+      return true;
+    }
+
+    next = saved;
+    if (N2()) {
+      return true;
+    }
+
+    next = saved;
+    if (N3()) {
+      return true;
+    }
+
+    next = saved;
+    if (N4()) {
+      return true;
+    }
+
+    next = saved;
+    if (N5()) {
+      return true;
+    }
+
+    next = saved;
+    if (N6()) {
+      return true;
+    }
+
+    next = saved;
+    if (N7()) {
+      return true;
+    }
+
+    return false;
   }
   /* TODO: sus otras funciones aqui */
 }
