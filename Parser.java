@@ -134,8 +134,62 @@ public class Parser {
     return E() && term(Token.SEMI);
   }
 
+  private boolean E1() {
+    return term(Token.UNARY) && E() && N();
+  }
+
+  private boolean E2() {
+    return term(Token.LPAREN) && E() && term(Token.RPAREN) && N();
+  }
+
+  private boolean E3() {
+    return term(Token.NUMBER) && N();
+  }
+
   private boolean E() {
-    return false;
+    int saved = next;
+    return (next = saved, E1())
+      || (next = saved, E2())
+      || (next = saved, E3());
+  }
+
+  private boolean N1() {
+    return term(Token.PLUS) && E() && N();
+  }
+
+  private boolean N2() {
+    return term(Token.MINUS) && E() && N();
+  }
+
+  private boolean N3() {
+    return term(Token.MULT) && E() && N();
+  }
+
+  private boolean N4() {
+    return term(Token.DIV) && E() && N();
+  }
+
+  private boolean N5() {
+    return term(Token.MOD) && E() && N();
+  }
+
+  private boolean N6() {
+    return term(Token.EXP) && E() && N();
+  }
+
+  private boolean N7() {
+    return true;
+  }
+
+  private boolean N() {
+    int saved = next;
+    return (next = saved, N1())
+      || (next = saved, N2())
+      || (next = saved, N3())
+      || (next = saved, N4())
+      || (next = saved, N5())
+      || (next = saved, N6())
+      || (next = saved, N7());
   }
   /* TODO: sus otras funciones aqui */
 }
